@@ -7,6 +7,9 @@ $OUTPUT_PATH/entry.txt, where the harness gate reads it.
 
 import os
 
+# Gate: the harness accepts 1-200 characters of UTF-8 text.
+MAX_CHARS = 200
+
 LINE = (
     "you closed the lid and the fan wound down to nothing. "
     "i'll keep your cursor blinking until morning."
@@ -15,7 +18,9 @@ LINE = (
 
 def main():
     line = " ".join(LINE.split())
-    assert 1 <= len(line) <= 200, f"entry must be 1-200 chars, got {len(line)}"
+    assert 1 <= len(line) <= MAX_CHARS, (
+        f"entry must be 1-{MAX_CHARS} chars, got {len(line)}"
+    )
     out_dir = os.environ.get("OUTPUT_PATH", "/output")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
